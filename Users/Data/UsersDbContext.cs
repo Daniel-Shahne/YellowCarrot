@@ -42,6 +42,12 @@ namespace YellowCarrot.Users.Data
                     UserId = 1,
                     Username = "user",
                     Password = "password"
+                },
+                new User()
+                {
+                    UserId = 2,
+                    Username = "user2",
+                    Password = "password2"
                 }
             );
         }

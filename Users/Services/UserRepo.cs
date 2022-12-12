@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using YellowCarrot.Users.Data;
 using YellowCarrot.Users.Models;
 
-namespace YellowCarrot.Users.Repositories
+namespace YellowCarrot.Users.Services
 {
     internal class UserRepo
     {
