@@ -15,11 +15,11 @@ namespace YellowCarrot.Food.Models
         [MaxLength(50)]
         public string Name { get; set; } = null!;
 
-        public List<Step> Steps = new();
+        public List<Step> Steps = null!;
 
-        public List<Tag> Tags = new();
+        public List<Tag> Tags = null!;
 
-        public List<Ingredient> Ingredients = new();
+        public List<Ingredient> Ingredients = null!;
         
         public User Author = null!;
     }

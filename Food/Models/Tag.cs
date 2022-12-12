@@ -14,6 +14,6 @@ namespace YellowCarrot.Food.Models
         [MaxLength(100)]
         public string TagName { get; set; } = null!;
 
-        public List<Recipe> Recipes { get; set; } = new();
+        public List<Recipe> Recipes { get; set; } = null!;
     }
 }

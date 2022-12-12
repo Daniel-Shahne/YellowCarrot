@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Food\Data\" />
     <Folder Include="Food\Repositories\" />
   </ItemGroup>
 

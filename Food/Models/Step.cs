@@ -17,7 +17,5 @@ namespace YellowCarrot.Food.Models
         public int Order { get; set; }
 
         public Recipe Recipe { get; set; } = null!;
-        public string RecipeName { get; set; } = null!;
-
     }
 }
