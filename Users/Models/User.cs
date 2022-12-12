@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YellowCarrot.Food.Models;
 
 namespace YellowCarrot.Users.Models
 {
@@ -18,5 +19,7 @@ namespace YellowCarrot.Users.Models
         [MaxLength(255)]
         [EncryptColumn]
         public string Password { get; set; } = null!;
+
+        public List<Recipe> Recipes = new();
     }
 }
