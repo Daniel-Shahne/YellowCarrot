@@ -21,6 +21,6 @@ namespace YellowCarrot.Food.Models
 
         public List<Ingredient> Ingredients = null!;
         
-        public User Author = null!;
+        public User UserId = null!;
     }
 }

@@ -23,7 +23,7 @@ namespace YellowCarrot.Food.Services
         {
             return await context.Recipes
                 .Include(r => r.Ingredients)
-                .Include(r => r.Author)
+                .Include(r => r.UserId)
                 .Include(r => r.Tags)
                 .Include(r => r.Steps)
                 .ToListAsync();
@@ -36,7 +36,7 @@ namespace YellowCarrot.Food.Services
             return await context.Recipes
                 .Where(r => r.Name.Contains(searchWord) || r.Tags.Any(t => t.TagName.Contains(searchWord)))
                 .Include(r => r.Ingredients)
-                .Include(r => r.Author)
+                .Include(r => r.UserId)
                 .Include(r => r.Tags)
                 .Include(r => r.Steps)
                 .ToListAsync();
@@ -54,6 +54,11 @@ namespace YellowCarrot.Food.Services
         public void RemoveRecipe(Recipe newRecipe)
         {
             context.Recipes.Remove(newRecipe);
+        }
+
+        public async Task SaveRecipesChangesAsync()
+        {
+            await context.SaveChangesAsync();
         }
     }
 }

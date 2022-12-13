@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YellowCarrot.Food.Models;
+using YellowCarrot.Food.Services;
+using YellowCarrot.Users.Data;
+using YellowCarrot.Users.Models;
+using YellowCarrot.Users.Services;
 
 namespace YellowCarrot.Food.Data
 {
@@ -56,5 +60,7 @@ namespace YellowCarrot.Food.Data
                 .WithMany(r => r.Steps)
                 .OnDelete(DeleteBehavior.Cascade);
         }
+
+        
     }
 }
