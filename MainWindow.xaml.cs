@@ -31,6 +31,13 @@ namespace YellowCarrot
             InitializeComponent();
         }
 
+
+
+
+
+
+        /* This was just to test if EFC works as expected (successful).
+         * TODO need to turn this into a proper seeding */
         private async Task seedDataAsync()
         {
             Tag italianTag = new()

@@ -61,6 +61,7 @@ namespace YellowCarrot.Food.Data
                 .OnDelete(DeleteBehavior.Cascade);
         }
 
-        
+        /* TODO need to make a proper seeding algorithm.
+         * Its partially done in MainWindow's seeding method*/
     }
 }
