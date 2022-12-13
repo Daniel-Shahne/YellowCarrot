@@ -16,7 +16,7 @@ namespace YellowCarrot.Users.Models
         [MaxLength(20)]
         public string Username { get; set; } = null!;
 
-        [MaxLength(255)]
+        [MaxLength(1000)]
         [EncryptColumn]
         public string Password { get; set; } = null!;
 

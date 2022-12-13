@@ -86,6 +86,7 @@ namespace YellowCarrot.Food.Data
                     IngredientId = 1,
                     Name = "Tomatssås",
                     Quantity = 1,
+                    QuantityUnit = "st",
                     RecipeId = 1
                 },
                 new Ingredient()
@@ -93,6 +94,7 @@ namespace YellowCarrot.Food.Data
                     IngredientId = 2,
                     Name = "Örter",
                     Quantity = 1,
+                    QuantityUnit = "burk",
                     RecipeId = 1
                 },
                 new Ingredient()
@@ -100,6 +102,7 @@ namespace YellowCarrot.Food.Data
                     IngredientId = 3,
                     Name = "Spaghetti",
                     Quantity = 500,
+                    QuantityUnit = "gram",
                     RecipeId = 1
                 },
                 /* Second recipe's ingredients */
@@ -108,13 +111,15 @@ namespace YellowCarrot.Food.Data
                     IngredientId = 4,
                     Name = "Pizza Dough",
                     Quantity = 1,
+                    QuantityUnit = "st",
                     RecipeId = 2
                 },
                 new Ingredient()
                 {
                     IngredientId = 5,
                     Name = "Mozzarella",
-                    Quantity = 10,
+                    Quantity = 1,
+                    QuantityUnit = "kilogram",
                     RecipeId = 2
                 },
                 new Ingredient()
@@ -122,6 +127,7 @@ namespace YellowCarrot.Food.Data
                     IngredientId = 6,
                     Name = "Italian spices",
                     Quantity = 100,
+                    QuantityUnit = "gram",
                     RecipeId = 2
                 }
             );

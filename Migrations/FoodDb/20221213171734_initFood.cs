@@ -47,6 +47,7 @@ namespace YellowCarrot.Migrations.FoodDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    QuantityUnit = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     RecipeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -126,15 +127,15 @@ namespace YellowCarrot.Migrations.FoodDb
 
             migrationBuilder.InsertData(
                 table: "Ingredients",
-                columns: new[] { "IngredientId", "Name", "Quantity", "RecipeId" },
+                columns: new[] { "IngredientId", "Name", "Quantity", "QuantityUnit", "RecipeId" },
                 values: new object[,]
                 {
-                    { 1, "Tomatssås", 1, 1 },
-                    { 2, "Örter", 1, 1 },
-                    { 3, "Spaghetti", 500, 1 },
-                    { 4, "Pizza Dough", 1, 2 },
-                    { 5, "Mozzarella", 10, 2 },
-                    { 6, "Italian spices", 100, 2 }
+                    { 1, "Tomatssås", 1, "st", 1 },
+                    { 2, "Örter", 1, "burk", 1 },
+                    { 3, "Spaghetti", 500, "gram", 1 },
+                    { 4, "Pizza Dough", 1, "st", 2 },
+                    { 5, "Mozzarella", 1, "kilogram", 2 },
+                    { 6, "Italian spices", 100, "gram", 2 }
                 });
 
             migrationBuilder.InsertData(

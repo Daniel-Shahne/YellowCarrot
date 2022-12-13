@@ -15,6 +15,8 @@ namespace YellowCarrot.Food.Models
         public string Name { get; set; } = null!;
 
         public int Quantity { get; set; }
+        [MaxLength(15)]
+        public string QuantityUnit { get; set; } = null!;
 
         public int RecipeId { get; set; }
         public Recipe Recipe { get; set; } = null!;

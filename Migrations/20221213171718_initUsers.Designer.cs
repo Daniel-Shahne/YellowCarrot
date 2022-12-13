@@ -11,7 +11,7 @@ using YellowCarrot.Users.Data;
 namespace YellowCarrot.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20221213114848_initUsers")]
+    [Migration("20221213171718_initUsers")]
     partial class initUsers
     {
         /// <inheritdoc />
@@ -34,8 +34,8 @@ namespace YellowCarrot.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Username")
                         .IsRequired()

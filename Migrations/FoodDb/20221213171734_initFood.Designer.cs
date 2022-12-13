@@ -11,7 +11,7 @@ using YellowCarrot.Food.Data;
 namespace YellowCarrot.Migrations.FoodDb
 {
     [DbContext(typeof(FoodDbContext))]
-    [Migration("20221213130058_initFood")]
+    [Migration("20221213171734_initFood")]
     partial class initFood
     {
         /// <inheritdoc />
@@ -55,6 +55,11 @@ namespace YellowCarrot.Migrations.FoodDb
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("QuantityUnit")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
@@ -70,6 +75,7 @@ namespace YellowCarrot.Migrations.FoodDb
                             IngredientId = 1,
                             Name = "Tomatssås",
                             Quantity = 1,
+                            QuantityUnit = "st",
                             RecipeId = 1
                         },
                         new
@@ -77,6 +83,7 @@ namespace YellowCarrot.Migrations.FoodDb
                             IngredientId = 2,
                             Name = "Örter",
                             Quantity = 1,
+                            QuantityUnit = "burk",
                             RecipeId = 1
                         },
                         new
@@ -84,6 +91,7 @@ namespace YellowCarrot.Migrations.FoodDb
                             IngredientId = 3,
                             Name = "Spaghetti",
                             Quantity = 500,
+                            QuantityUnit = "gram",
                             RecipeId = 1
                         },
                         new
@@ -91,13 +99,15 @@ namespace YellowCarrot.Migrations.FoodDb
                             IngredientId = 4,
                             Name = "Pizza Dough",
                             Quantity = 1,
+                            QuantityUnit = "st",
                             RecipeId = 2
                         },
                         new
                         {
                             IngredientId = 5,
                             Name = "Mozzarella",
-                            Quantity = 10,
+                            Quantity = 1,
+                            QuantityUnit = "kilogram",
                             RecipeId = 2
                         },
                         new
@@ -105,6 +115,7 @@ namespace YellowCarrot.Migrations.FoodDb
                             IngredientId = 6,
                             Name = "Italian spices",
                             Quantity = 100,
+                            QuantityUnit = "gram",
                             RecipeId = 2
                         });
                 });
