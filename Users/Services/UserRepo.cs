@@ -29,5 +29,11 @@ namespace YellowCarrot.Users.Services
         {
             await context.Users.AddAsync(newUser);
         }
+
+        /* Returns a list of all usernames */
+        public async Task<List<string>> GetUsernamesAsync()
+        {
+            return await context.Users.Select(u => u.Username).ToListAsync();
+        }
     }
 }

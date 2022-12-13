@@ -19,7 +19,5 @@ namespace YellowCarrot.Users.Models
         [MaxLength(1000)]
         [EncryptColumn]
         public string Password { get; set; } = null!;
-
-        public List<Recipe> Recipes = new();
     }
 }

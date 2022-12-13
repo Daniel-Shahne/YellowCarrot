@@ -11,7 +11,7 @@ using YellowCarrot.Food.Data;
 namespace YellowCarrot.Migrations.FoodDb
 {
     [DbContext(typeof(FoodDbContext))]
-    [Migration("20221213171734_initFood")]
+    [Migration("20221213180325_initFood")]
     partial class initFood
     {
         /// <inheritdoc />
