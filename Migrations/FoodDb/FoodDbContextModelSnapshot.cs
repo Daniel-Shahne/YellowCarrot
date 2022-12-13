@@ -60,6 +60,50 @@ namespace YellowCarrot.Migrations.FoodDb
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Ingredients");
+
+                    b.HasData(
+                        new
+                        {
+                            IngredientId = 1,
+                            Name = "Tomatssås",
+                            Quantity = 1,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            IngredientId = 2,
+                            Name = "Örter",
+                            Quantity = 1,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            IngredientId = 3,
+                            Name = "Spaghetti",
+                            Quantity = 500,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            IngredientId = 4,
+                            Name = "Pizza Dough",
+                            Quantity = 1,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            IngredientId = 5,
+                            Name = "Mozzarella",
+                            Quantity = 10,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            IngredientId = 6,
+                            Name = "Italian spices",
+                            Quantity = 100,
+                            RecipeId = 2
+                        });
                 });
 
             modelBuilder.Entity("YellowCarrot.Food.Models.Recipe", b =>
@@ -75,9 +119,26 @@ namespace YellowCarrot.Migrations.FoodDb
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("RecipeId");
 
                     b.ToTable("Recipes");
+
+                    b.HasData(
+                        new
+                        {
+                            RecipeId = 1,
+                            Name = "Spaghetti med köttfärssås",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            RecipeId = 2,
+                            Name = "Margherita",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("YellowCarrot.Food.Models.Step", b =>
@@ -104,6 +165,36 @@ namespace YellowCarrot.Migrations.FoodDb
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Steps");
+
+                    b.HasData(
+                        new
+                        {
+                            StepId = 1,
+                            Description = "Blanda ihop såsen med örter, och koka spaghettin",
+                            Order = 1,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            StepId = 2,
+                            Description = "Häll såsen på spaghettin",
+                            Order = 2,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            StepId = 3,
+                            Description = "Toppa pizzadegen",
+                            Order = 1,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            StepId = 4,
+                            Description = "Sätt i ugnen",
+                            Order = 2,
+                            RecipeId = 2
+                        });
                 });
 
             modelBuilder.Entity("YellowCarrot.Food.Models.Tag", b =>
@@ -122,6 +213,23 @@ namespace YellowCarrot.Migrations.FoodDb
                     b.HasKey("TagId");
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            TagId = 1,
+                            TagName = "Italian food"
+                        },
+                        new
+                        {
+                            TagId = 2,
+                            TagName = "Meat"
+                        },
+                        new
+                        {
+                            TagId = 3,
+                            TagName = "Vegetarian"
+                        });
                 });
 
             modelBuilder.Entity("RecipeTag", b =>

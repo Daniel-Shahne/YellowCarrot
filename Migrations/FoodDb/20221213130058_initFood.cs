@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace YellowCarrot.Migrations.FoodDb
 {
     /// <inheritdoc />
@@ -16,7 +18,8 @@ namespace YellowCarrot.Migrations.FoodDb
                 {
                     RecipeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,6 +103,49 @@ namespace YellowCarrot.Migrations.FoodDb
                         principalTable: "Tags",
                         principalColumn: "TagId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Recipes",
+                columns: new[] { "RecipeId", "Name", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "Spaghetti med köttfärssås", 1 },
+                    { 2, "Margherita", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "TagId", "TagName" },
+                values: new object[,]
+                {
+                    { 1, "Italian food" },
+                    { 2, "Meat" },
+                    { 3, "Vegetarian" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ingredients",
+                columns: new[] { "IngredientId", "Name", "Quantity", "RecipeId" },
+                values: new object[,]
+                {
+                    { 1, "Tomatssås", 1, 1 },
+                    { 2, "Örter", 1, 1 },
+                    { 3, "Spaghetti", 500, 1 },
+                    { 4, "Pizza Dough", 1, 2 },
+                    { 5, "Mozzarella", 10, 2 },
+                    { 6, "Italian spices", 100, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Steps",
+                columns: new[] { "StepId", "Description", "Order", "RecipeId" },
+                values: new object[,]
+                {
+                    { 1, "Blanda ihop såsen med örter, och koka spaghettin", 1, 1 },
+                    { 2, "Häll såsen på spaghettin", 2, 1 },
+                    { 3, "Toppa pizzadegen", 1, 2 },
+                    { 4, "Sätt i ugnen", 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
