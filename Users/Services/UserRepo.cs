@@ -24,6 +24,12 @@ namespace YellowCarrot.Users.Services
             return await context.Users.FirstOrDefaultAsync(u => u.Username == userName);
         }
 
+        /* Returns a user (or null) if ID match found */
+        public async Task<User?> GetUserByIdAsync(int userId)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        }
+
         /* Creates a new user */
         public async Task CreateUserAsync(User newUser)
         {

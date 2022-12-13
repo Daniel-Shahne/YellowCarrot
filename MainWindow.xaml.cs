@@ -62,7 +62,9 @@ namespace YellowCarrot
             }
             else if (attemptedUser.Password.Equals(pswPassword.Password))
             {
-                MessageBox.Show("can login");
+                RecipeWindow recwin = new(attemptedUser);
+                recwin.Show();
+                this.Close();
             }
         }
     }
