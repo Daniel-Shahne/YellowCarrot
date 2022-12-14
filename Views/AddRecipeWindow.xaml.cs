@@ -24,7 +24,7 @@ namespace YellowCarrot.Views
     /// </summary>
     public partial class AddRecipeWindow : Window
     {
-        private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{2,15})$");
+        private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{1,15})$");
         private User loggedInUser;
         private bool recipeNameLenOk;
         private bool tagNameLenOk;
@@ -275,7 +275,7 @@ namespace YellowCarrot.Views
         {
             List<string> errors = new();
             if (!ingredientNameLenOk) errors.Add("Ingredient name needs to be between 3 and 20 characters long");
-            if (!quantityTxbOk) errors.Add("Quantity needs to be an integer (1-5 chars) and unit (2-15 chars) separated by space");
+            if (!quantityTxbOk) errors.Add("Quantity needs to be an integer (1-5 chars) and unit (1-15 chars) separated by space");
 
             if (errors.Count > 0)
             {
@@ -328,10 +328,12 @@ namespace YellowCarrot.Views
             }
             else
             {
+                // Lists for all LVI's tag objects
                 List<Step> stepsList = new();
                 List<Ingredient> ingredientsList = new();
-                List<Tag> tagsList = new();
+                List<Tag> tagsListPrimitive = new();
 
+                // Getting all LVI tag objects
                 foreach (ListViewItem lvi in lvSteps.Items)
                 {
                     Step step = (Step)lvi.Tag;
@@ -345,15 +347,22 @@ namespace YellowCarrot.Views
                 foreach (ListViewItem lvi in lvTags.Items)
                 {
                     Tag tag = (Tag)lvi.Tag;
-                    tagsList.Add(tag);
+                    tagsListPrimitive.Add(tag);
                 }
 
+                /* Tags have to be checked for if they already exist
+                 * The two lists then have to be combined somehow*/
+                List<Tag> existingTagsList = new();
+                using (FoodDbContext context = new())
+                {
+                    existingTagsList = await new TagsRepo(context).GetMatchingTagsByName(tagsListPrimitive);
+                }
 
                 Recipe newRecipe = new()
                 {
                     Name = txbRecipeName.Text,
                     Steps = stepsList,
-                    Tags = tagsList,
+                    Tags = tagsListPrimitive, //TODO Change this
                     Ingredients = ingredientsList,
                     UserId = loggedInUser.UserId
                 };
@@ -361,6 +370,7 @@ namespace YellowCarrot.Views
                 using (FoodDbContext context = new())
                 {
                     await new RecipesRepo(context).CreateRecipeAsync(newRecipe);
+                    await context.SaveChangesAsync();
                     MessageBox.Show($"Added recipe {newRecipe.Name}!");
                 }
             }
