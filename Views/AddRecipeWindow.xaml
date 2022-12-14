@@ -8,7 +8,7 @@
         Title="AddRecipeWindow" Height="450" Width="800">
     <Grid Margin="20">
         <!-- First layer split into 3 columns for objectives -->
-        <!-- 0. Name, tag and add/cancel buttons -->
+        <!-- 0. Name, tag and add/cancel recipe buttons -->
         <!-- 1. Ingredients -->
         <!-- 2. Steps -->
         <Grid.ColumnDefinitions>
@@ -78,6 +78,82 @@
             </StackPanel>
         </Grid>
         
+        <!-- Second layer grid for objective 1 -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Input fields for ingredients -->
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Ingredient name:"/>
+                <TextBox x:Name="txbIngredientName"
+                         Width="150"
+                         Height="50"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Label Content="Quantity and unit:"/>
+                <TextBox x:Name="txbQuantity"
+                         Width="145"
+                         Height="50"/>
+            </StackPanel>
+
+            <!-- Listview of ingredients -->
+            <ListView x:Name="lvIngredients"
+                      Grid.Row="2"
+                      Margin="10"/>
+
+            <!-- Add/Remove ingredient buttons -->
+            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+                <Button x:Name="btnAddIngredient"
+                        Content="Add Ingredient"
+                        Height="50"
+                        Margin="10 0"/>
+                <Button x:Name="btnRemoveIngredient"
+                        Content="Remove Ingredient"
+                        Height="50"
+                        Margin="10 0"/>
+            </StackPanel>
+        </Grid>
+        
+        <!-- Second layer grid for objective 2 -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+           
+            
+            <!-- Description input field -->
+            <TextBox x:Name="txbStepDescription"
+                     Grid.Row="0"
+                     Margin="10"/>
+            
+            <!-- ListView of steps -->
+            <ListView x:Name="lvSteps"
+                      Grid.Row="1"
+                      Margin="10"/>
+
+            <!-- Order input label/field + step buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+                <Label Content="Order Nr."
+                       Height="50"/>
+                <TextBox x:Name="txbOrderNr"
+                         Width="50"
+                         Height="50"
+                         Margin="5 0"/>
+                <Button x:Name="btnAddStep"
+                        Content="Add Step"
+                        Margin="5 0"/>
+                <Button x:Name="btnRemoveStep"
+                        Content="Remove Step"/>
+            </StackPanel>
+
+        </Grid>
         
     </Grid>
 </Window>
