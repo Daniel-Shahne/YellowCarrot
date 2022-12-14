@@ -248,5 +248,35 @@ namespace YellowCarrot.Views
             }
             else MessageBox.Show("Need to select an item to remove");
         }
+
+        private void btnAddIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> errors = new();
+            if (!ingredientNameLenOk) errors.Add("Ingredient name needs to be between 3 and 20 characters long");
+            if (!quantityTxbOk) errors.Add("Quantity needs to be an integer (1-5 chars) and unit (2-15 chars) separated by space");
+
+            if (errors.Count > 0)
+            {
+                string errorMsg = String.Join("\n", errors);
+                MessageBox.Show(errorMsg, "Add ingredient failed");
+                return;
+            }
+            else 
+            {
+                Match regmatch = quantityRegex.Match(txbQuantity.Text);
+
+                Ingredient newIngredient = new()
+                {
+                    Name = txbIngredientName.Text,
+                    Quantity = Int32.Parse(regmatch.Groups[1].Value),
+                    QuantityUnit = regmatch.Groups[2].Value
+                };
+
+                ListViewItem lvi = new();
+                lvi.Tag = newIngredient;
+                lvi.Content = $"{newIngredient.Quantity} {newIngredient.QuantityUnit} of {newIngredient.Name}";
+                lvIngredients.Items.Add(lvi);
+            }
+        }
     }
 }

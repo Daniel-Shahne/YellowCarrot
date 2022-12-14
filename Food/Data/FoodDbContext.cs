@@ -56,8 +56,6 @@ namespace YellowCarrot.Food.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
 
-
-
             // ---------- SEEDING -------------
 
             /* Tags are shared across recipes*/

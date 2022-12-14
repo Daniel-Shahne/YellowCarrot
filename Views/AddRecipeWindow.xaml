@@ -121,7 +121,7 @@
                 <Button x:Name="btnAddIngredient"
                         Content="Add Ingredient"
                         Height="50"
-                        Margin="10 0"/>
+                        Margin="10 0" Click="btnAddIngredient_Click"/>
                 <Button x:Name="btnRemoveIngredient"
                         Content="Remove Ingredient"
                         Height="50"
