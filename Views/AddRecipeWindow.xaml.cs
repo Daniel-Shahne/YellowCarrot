@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,9 +23,12 @@ namespace YellowCarrot.Views
     public partial class AddRecipeWindow : Window
     {
         private User loggedInUser;
-
         private bool recipeNameLenOk;
         private bool tagNameLenOk;
+        private bool ingredientNameLenOk;
+        private bool quantityTxbOk;
+
+        private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{2,15})$");
 
         internal AddRecipeWindow(User loggedInUser)
         {
@@ -85,6 +89,48 @@ namespace YellowCarrot.Views
             RecipeWindow recwin = new(loggedInUser);
             recwin.Show();
             this.Close();
+        }
+
+        private void btnRemoveTag_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvTags.SelectedItem != null)
+            {
+                lvTags.Items.Remove(lvTags.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Need to select a tag to remove");
+            }
+        }
+
+        // Limited to 20 characters
+        private void txbIngredientName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txbIngredientName.Text.Length >= 3 && txbIngredientName.Text.Length <= 20)
+            {
+                ingredientNameLenOk = true;
+                txbIngredientName.Foreground = Brushes.Black;
+            }
+            else
+            {
+                ingredientNameLenOk = false;
+                txbIngredientName.Foreground = Brushes.Red;
+            }
+        }
+
+        private void txbQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Match regMatch = quantityRegex.Match(txbQuantity.Text);
+            if (regMatch.Success)
+            {
+                txbQuantity.Foreground = Brushes.Black;
+                quantityTxbOk = true;
+            }
+            else
+            {
+                txbQuantity.Foreground = Brushes.Red;
+                quantityTxbOk = false;
+            }
         }
     }
 }

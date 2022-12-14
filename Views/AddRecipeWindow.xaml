@@ -32,7 +32,7 @@
                 <TextBox x:Name="txbRecipeName"
                          Height="50"
                          Width="150"
-                         Margin="20 0 0 0" TextChanged="txbRecipeName_TextChanged"/>
+                         Margin="5 0 0 0" TextChanged="txbRecipeName_TextChanged"/>
             </StackPanel>
 
             <!-- Third layer grid for tags-->
@@ -43,17 +43,27 @@
                 </Grid.RowDefinitions>
 
                 <!-- Stackpanel for tag label,txb and btn -->
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Tag name:"
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Tag name:"
                            Height="50"/>
-                    <TextBox x:Name="txbTagName"
+                        <TextBox x:Name="txbTagName"
                          Height="50"
-                         Width="100"
+                         Width="160"
                          Margin="10 0" TextChanged="txbTagName_TextChanged"/>
-                    <Button x:Name="btnAddTag"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="btnAddTag"
                             Width="60"
                             Height="50"
-                            Content="Add tag" Click="btnAddTag_Click"/>
+                            Content="Add tag" Click="btnAddTag_Click"
+                            Margin="10 0"/>
+                        <Button x:Name="btnRemoveTag"
+                            Width="60"
+                            Height="50"
+                            Content="Remove tag" Click="btnRemoveTag_Click"
+                            Margin="10 0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <ListView x:Name="lvTags"
@@ -92,13 +102,13 @@
                 <Label Content="Ingredient name:"/>
                 <TextBox x:Name="txbIngredientName"
                          Width="150"
-                         Height="50"/>
+                         Height="50" TextChanged="txbIngredientName_TextChanged"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="Quantity and unit:"/>
                 <TextBox x:Name="txbQuantity"
                          Width="145"
-                         Height="50"/>
+                         Height="50" TextChanged="txbQuantity_TextChanged"/>
             </StackPanel>
 
             <!-- Listview of ingredients -->
@@ -140,7 +150,7 @@
 
             <!-- Order input label/field + step buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
-                <Label Content="Order Nr."
+                <Label Content="Order"
                        Height="50"/>
                 <TextBox x:Name="txbOrderNr"
                          Width="50"
