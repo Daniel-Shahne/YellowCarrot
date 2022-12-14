@@ -40,7 +40,8 @@ namespace YellowCarrot
             this.Close();
         }
 
-        /* Attempts a login */
+        /* Attempts a login
+         * TODO this freezes the window? */
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
             User? attemptedUser;

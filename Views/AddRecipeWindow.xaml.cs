@@ -22,13 +22,15 @@ namespace YellowCarrot.Views
     /// </summary>
     public partial class AddRecipeWindow : Window
     {
+        private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{2,15})$");
         private User loggedInUser;
         private bool recipeNameLenOk;
         private bool tagNameLenOk;
         private bool ingredientNameLenOk;
         private bool quantityTxbOk;
-
-        private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{2,15})$");
+        private bool stepOrderOk;
+        private bool descriptionLenOk;
+        private int highestStepOrderNr = 0;
 
         internal AddRecipeWindow(User loggedInUser)
         {
@@ -131,6 +133,120 @@ namespace YellowCarrot.Views
                 txbQuantity.Foreground = Brushes.Red;
                 quantityTxbOk = false;
             }
+        }
+
+        private void txbOrderNr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Checks if OrderNr input even is a valid number, not two above highest current order, and above 0
+            if (Int32.TryParse(txbOrderNr.Text, out int quantity) && quantity < highestStepOrderNr + 2 && quantity > 0)
+            {
+                stepOrderOk = true;
+                txbOrderNr.Foreground = Brushes.Black;
+            }
+            else
+            {
+                stepOrderOk = false;
+                txbOrderNr.Foreground = Brushes.Red;
+            }
+        }
+
+        private void btnAddStep_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> errors = new();
+
+            if (!descriptionLenOk) errors.Add("Step description need to be between 10 and 1000 characters long");
+            if (!stepOrderOk) errors.Add("Order number needs to be above 0, and can only be one step above the highest");
+
+            // If any errors are found, display and cancel add
+            if (errors.Count > 0)
+            {
+                string errorMsg = String.Join("\n", errors);
+                MessageBox.Show(errorMsg, "Cant add Step");
+                return;
+            }
+            // If trying to append to end of orders
+            else if (Int32.Parse(txbOrderNr.Text) == highestStepOrderNr + 1)
+            {
+                Step newStep = new()
+                {
+                    Description = txbStepDescription.Text,
+                    Order = Int32.Parse(txbOrderNr.Text)
+                };
+
+                ListViewItem lvi = new();
+                lvi.Tag = newStep;
+                lvi.Content = $"Step {newStep.Order}: {newStep.Description}";
+                lvSteps.Items.Add(lvi);
+
+                highestStepOrderNr = newStep.Order;
+                txbOrderNr.Text = $"{newStep.Order + 1}";
+            }
+            // If trying to insert in the middle of the steps
+            else if (Int32.Parse(txbOrderNr.Text) <= highestStepOrderNr)
+            {
+                int newStepIndex = Int32.Parse(txbOrderNr.Text) - 1;
+
+                Step newStep = new()
+                {
+                    Description = txbStepDescription.Text,
+                    Order = Int32.Parse(txbOrderNr.Text)
+                };
+
+                // Inserts new lvi at its index
+                ListViewItem lvi = new();
+                lvi.Tag = newStep;
+                lvi.Content = $"Step {newStep.Order}: {newStep.Description}";
+                lvSteps.Items.Insert(newStepIndex, lvi);
+                
+                // Increments highest step order nr
+                highestStepOrderNr++;
+
+                // Increases the step number of every step above its index
+                for (int i = newStepIndex + 1; i < highestStepOrderNr; i++)
+                {
+                    ListViewItem lvii = (ListViewItem)lvSteps.Items[i];
+                    Step step = (Step)lvii.Tag;
+                    step.Order += 1;
+                    lvii.Content = $"Step {step.Order}: {step.Description}";
+                }
+            }
+        }
+        
+        // Description need to be atleast 10 characters long and max 1000
+        private void txbStepDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txbStepDescription.Text.Length >= 10 && txbStepDescription.Text.Length <= 1000)
+            {
+                descriptionLenOk = true;
+                txbStepDescription.Foreground = Brushes.Black;
+            }
+            else
+            {
+                descriptionLenOk = false;
+                txbStepDescription.Foreground = Brushes.Red;
+            }
+        }
+
+        private void btnRemoveStep_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvSteps.SelectedItem != null)
+            {
+                int indexRemovedAt = lvSteps.SelectedIndex;
+                lvSteps.Items.Remove(lvSteps.SelectedItem);
+                highestStepOrderNr--;
+
+                /* All the items above and AT the index of removal need
+                 * to be updated */
+                for (int i = indexRemovedAt; i < highestStepOrderNr; i++)
+                {
+                    ListViewItem lvii = (ListViewItem)lvSteps.Items[i];
+                    Step step = (Step)lvii.Tag;
+                    step.Order -= 1;
+                    lvii.Content = $"Step {step.Order}: {step.Description}";
+                }
+
+            }
+            else MessageBox.Show("Need to select an item to remove");
         }
     }
 }

@@ -141,12 +141,15 @@
             <!-- Description input field -->
             <TextBox x:Name="txbStepDescription"
                      Grid.Row="0"
-                     Margin="10"/>
+                     Margin="10"
+                     TextWrapping="Wrap"
+                     MaxLength="1000" TextChanged="txbStepDescription_TextChanged"/>
             
             <!-- ListView of steps -->
             <ListView x:Name="lvSteps"
                       Grid.Row="1"
-                      Margin="10"/>
+                      Margin="10">
+            </ListView>
 
             <!-- Order input label/field + step buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
@@ -155,12 +158,12 @@
                 <TextBox x:Name="txbOrderNr"
                          Width="50"
                          Height="50"
-                         Margin="5 0"/>
+                         Margin="5 0" TextChanged="txbOrderNr_TextChanged"/>
                 <Button x:Name="btnAddStep"
                         Content="Add Step"
-                        Margin="5 0"/>
+                        Margin="5 0" Click="btnAddStep_Click"/>
                 <Button x:Name="btnRemoveStep"
-                        Content="Remove Step"/>
+                        Content="Remove Step" Click="btnRemoveStep_Click"/>
             </StackPanel>
 
         </Grid>
