@@ -55,5 +55,12 @@ namespace YellowCarrot.Views
         {
             // TODO
         }
+
+        private void btnAddRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            AddRecipeWindow adw = new(loggedInUser);
+            adw.Show();
+            this.Close();
+        }
     }
 }

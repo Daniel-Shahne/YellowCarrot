@@ -32,7 +32,7 @@
                 <TextBox x:Name="txbRecipeName"
                          Height="50"
                          Width="150"
-                         Margin="20 0 0 0"/>
+                         Margin="20 0 0 0" TextChanged="txbRecipeName_TextChanged"/>
             </StackPanel>
 
             <!-- Third layer grid for tags-->
@@ -49,11 +49,11 @@
                     <TextBox x:Name="txbTagName"
                          Height="50"
                          Width="100"
-                         Margin="10 0"/>
+                         Margin="10 0" TextChanged="txbTagName_TextChanged"/>
                     <Button x:Name="btnAddTag"
                             Width="60"
                             Height="50"
-                            Content="Add tag"/>
+                            Content="Add tag" Click="btnAddTag_Click"/>
                 </StackPanel>
 
                 <ListView x:Name="lvTags"
@@ -74,7 +74,7 @@
                         Width="100"
                         Height="50"
                         Content="Cancel"
-                        Margin="10 0"/>
+                        Margin="10 0" Click="btnCancel_Click"/>
             </StackPanel>
         </Grid>
         
