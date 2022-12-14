@@ -69,11 +69,22 @@ namespace YellowCarrot.Views
         }
 
         /* Creates a new listviewitem with the Food Tag object in the
-         * lvi's Tag property as an object. */
+         * lvi's Tag property as an object. 
+         * Cant add a Tag multiple times */
         private void btnAddTag_Click(object sender, RoutedEventArgs e)
         {
             if (tagNameLenOk)
             {
+                foreach (ListViewItem lvii in lvTags.Items)
+                {
+                    Tag tag = (Tag)lvii.Tag;
+                    if (txbTagName.Text.Equals(tag.TagName))
+                    {
+                        MessageBox.Show("This tag has already been added");
+                        return;
+                    }
+                }
+                
                 ListViewItem lvi = new();
                 lvi.Tag = new Tag() { TagName = txbTagName.Text };
                 lvi.Content = txbTagName.Text;
@@ -93,6 +104,7 @@ namespace YellowCarrot.Views
             this.Close();
         }
 
+        // Removes a tag
         private void btnRemoveTag_Click(object sender, RoutedEventArgs e)
         {
             if (lvTags.SelectedItem != null)
@@ -120,6 +132,7 @@ namespace YellowCarrot.Views
             }
         }
 
+        // Quantity should be separate quantifier and unit, matched and verified by regex.
         private void txbQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
             Match regMatch = quantityRegex.Match(txbQuantity.Text);
@@ -150,6 +163,9 @@ namespace YellowCarrot.Views
             }
         }
 
+        /* Behemoth of a method that can add a step in several ways.
+         * 1. Simply adding a new step at the end of the order 
+         * 2. Inserting somewhere inside order and having to rearrange orders*/
         private void btnAddStep_Click(object sender, RoutedEventArgs e)
         {
             List<string> errors = new();
@@ -227,6 +243,7 @@ namespace YellowCarrot.Views
             }
         }
 
+        /* Removes a step and modifies order numbers to be correct */
         private void btnRemoveStep_Click(object sender, RoutedEventArgs e)
         {
             if (lvSteps.SelectedItem != null)
@@ -249,6 +266,9 @@ namespace YellowCarrot.Views
             else MessageBox.Show("Need to select an item to remove");
         }
 
+        /* Adds an ingredient if the input fields are ok according
+         * to the field variables, which are modified by their corresponding
+         * controls text changed events. */
         private void btnAddIngredient_Click(object sender, RoutedEventArgs e)
         {
             List<string> errors = new();
@@ -277,6 +297,15 @@ namespace YellowCarrot.Views
                 lvi.Content = $"{newIngredient.Quantity} {newIngredient.QuantityUnit} of {newIngredient.Name}";
                 lvIngredients.Items.Add(lvi);
             }
+        }
+
+        private void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvIngredients.SelectedItem is not null)
+            {
+                lvIngredients.Items.Remove(lvIngredients.SelectedItem);
+            }
+            else MessageBox.Show("Select an ingredient to remove first");
         }
     }
 }
