@@ -1,0 +1,83 @@
+﻿<Window x:Class="YellowCarrot.Views.AddRecipeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YellowCarrot.Views"
+        mc:Ignorable="d"
+        Title="AddRecipeWindow" Height="450" Width="800">
+    <Grid Margin="20">
+        <!-- First layer split into 3 columns for objectives -->
+        <!-- 0. Name, tag and add/cancel buttons -->
+        <!-- 1. Ingredients -->
+        <!-- 2. Steps -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Second layer grid for objective 0 -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Stackpanel for recipe name label/txb -->
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Recipe name:"/>
+                <TextBox x:Name="txbRecipeName"
+                         Height="50"
+                         Width="150"
+                         Margin="20 0 0 0"/>
+            </StackPanel>
+
+            <!-- Third layer grid for tags-->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Stackpanel for tag label,txb and btn -->
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Tag name:"
+                           Height="50"/>
+                    <TextBox x:Name="txbTagName"
+                         Height="50"
+                         Width="100"
+                         Margin="10 0"/>
+                    <Button x:Name="btnAddTag"
+                            Width="60"
+                            Height="50"
+                            Content="Add tag"/>
+                </StackPanel>
+
+                <ListView x:Name="lvTags"
+                          Grid.Row="1"
+                          Margin="10"/>
+            </Grid>
+            
+            <!-- TODO Empty row incase i need to add something extra -->
+            
+            <!-- Button for adding recipe or cancelling -->
+            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+                <Button x:Name="btnAddRecipe"
+                        Width="100"
+                        Height="50"
+                        Content="Add Recipe"
+                        Margin="10 0"/>
+                <Button x:Name="btnCancel"
+                        Width="100"
+                        Height="50"
+                        Content="Cancel"
+                        Margin="10 0"/>
+            </StackPanel>
+        </Grid>
+        
+        
+    </Grid>
+</Window>

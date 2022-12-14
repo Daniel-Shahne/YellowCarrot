@@ -52,7 +52,7 @@
                     Grid.Row="3"
                     Height="50"
                     Width="200"
-                    Content="Recipe details"/>
+                    Content="Recipe details" Click="btnRecipeDetails_Click"/>
         </Grid>
     </Grid>
 </Window>

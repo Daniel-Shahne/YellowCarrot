@@ -22,7 +22,7 @@ namespace YellowCarrot.Views
     /// <summary>
     /// Interaction logic for RecipeWindow.xaml
     /// </summary>
-    internal partial class RecipeWindow : Window
+    public partial class RecipeWindow : Window
     {
         User loggedInUser;
 
@@ -30,10 +30,11 @@ namespace YellowCarrot.Views
         {
             InitializeComponent();
             this.loggedInUser = loggedInUser;
+            GetAllRecipesLV();
         }
 
 
-        private async void refreshRecipesLV()
+        private async void GetAllRecipesLV()
         {
             List<Recipe> recipesList;
             using (FoodDbContext context = new())
@@ -41,12 +42,18 @@ namespace YellowCarrot.Views
                 recipesList = await new RecipesRepo(context).GetAllRecipesAsync();
             }
 
-;
+;           
             foreach (Recipe recipe in recipesList)
             {
-                RecipeViewModel RVM = new RecipeViewModel(recipe);
-                lvRecipes.Items.Add(RVM.createLVI());
+                RecipeViewModel rvm = await RecipeViewModel.InstantiateAsync(recipe);
+                ListViewItem lvi = rvm.createLVI();
+                lvRecipes.Items.Add(lvi);
             }
+        }
+
+        private void btnRecipeDetails_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO
         }
     }
 }

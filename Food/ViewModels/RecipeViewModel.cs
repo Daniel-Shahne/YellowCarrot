@@ -24,7 +24,7 @@ namespace YellowCarrot.Food.ViewModels
             this.author = author;
         }
 
-        // Runs CTOR and instantiates async.
+        // Runs CTOR and instantiates async. Also retrieves an author
         public static async Task<RecipeViewModel> InstantiateAsync(Recipe recipe)
         {
             User? localAuthor;
@@ -45,7 +45,8 @@ namespace YellowCarrot.Food.ViewModels
         {
             ListViewItem lvi = new();
             lvi.Tag = recipe;
-            lvi.Content = $"{recipe.Name} created by {author.Username}";
+            string authorname = author != null ? author.Username : "unknown";
+            lvi.Content = $"{recipe.Name} created by {authorname}";
             return lvi;
         }
     }
