@@ -41,7 +41,7 @@ namespace YellowCarrot.Food.Services
         }
 
         /* Simply adds a recipe */
-        public async Task CreateRecipe(Recipe newRecipe)
+        public async Task CreateRecipeAsync(Recipe newRecipe)
         {
             await context.Recipes.AddAsync(newRecipe);
         }

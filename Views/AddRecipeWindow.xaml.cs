@@ -12,7 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using YellowCarrot.Food.Data;
 using YellowCarrot.Food.Models;
+using YellowCarrot.Food.Services;
 using YellowCarrot.Users.Models;
 
 namespace YellowCarrot.Views
@@ -299,6 +301,7 @@ namespace YellowCarrot.Views
             }
         }
 
+        // Simply removes an ingredient from the lv
         private void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (lvIngredients.SelectedItem is not null)
@@ -307,5 +310,60 @@ namespace YellowCarrot.Views
             }
             else MessageBox.Show("Select an ingredient to remove first");
         }
+
+
+        private async void btnAddRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> errors = new();
+
+            if (!ingredientNameLenOk) errors.Add("Ingredient name needs to be between 3 and 20 characters long");
+            if (lvTags.Items.Count == 0) errors.Add("Recipe needs tag(s)");
+            if (lvIngredients.Items.Count == 0) errors.Add("What kind of recipe has no ingredients?");
+            if (lvSteps.Items.Count == 0) errors.Add("If we didnt want steps we wouldn't be looking for recipes");
+
+            if (errors.Count > 0)
+            {
+                string errorMsg = String.Join("\n", errors);
+                MessageBox.Show(errorMsg);
+            }
+            else
+            {
+                List<Step> stepsList = new();
+                List<Ingredient> ingredientsList = new();
+                List<Tag> tagsList = new();
+
+                foreach (ListViewItem lvi in lvSteps.Items)
+                {
+                    Step step = (Step)lvi.Tag;
+                    stepsList.Add(step);
+                }
+                foreach (ListViewItem lvi in lvIngredients.Items)
+                {
+                    Ingredient ingr = (Ingredient)lvi.Tag;
+                    ingredientsList.Add(ingr);
+                }
+                foreach (ListViewItem lvi in lvTags.Items)
+                {
+                    Tag tag = (Tag)lvi.Tag;
+                    tagsList.Add(tag);
+                }
+
+
+                Recipe newRecipe = new()
+                {
+                    Name = txbRecipeName.Text,
+                    Steps = stepsList,
+                    Tags = tagsList,
+                    Ingredients = ingredientsList,
+                    UserId = loggedInUser.UserId
+                };
+
+                using (FoodDbContext context = new())
+                {
+                    await new RecipesRepo(context).CreateRecipeAsync(newRecipe);
+                    MessageBox.Show($"Added recipe {newRecipe.Name}!");
+                }
+            }
+        }   
     }
 }

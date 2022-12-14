@@ -79,7 +79,7 @@
                         Width="100"
                         Height="50"
                         Content="Add Recipe"
-                        Margin="10 0"/>
+                        Margin="10 0" Click="btnAddRecipe_Click"/>
                 <Button x:Name="btnCancel"
                         Width="100"
                         Height="50"
