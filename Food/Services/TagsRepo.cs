@@ -20,20 +20,19 @@ namespace YellowCarrot.Food.Services
 
         /* Takes a list of primitive Tags (i.e ones that arent linked to
          * the databases) and finds tracked versions of them. */
-        public async Task<List<Tag>> GetMatchingTagsByName(List<Tag> primitiveTagsList)
+        public async Task<List<Tag>> GetMatchingTagsByName(List<string> userInputTagNames)
         {
             Func<string, string> capitalizeFirstLetter = x => $"{char.ToUpper(x[0])}{x.Substring(1)}";
             
             // "Converts" to correct grammar tag names for use in finding in database
-            List<string> existingTagNamesList = new();
-            foreach (Tag tag in primitiveTagsList)
+            List<string> inputTagNamesListCapitalized = new();
+            foreach (string tagName in userInputTagNames)
             {
-                string tagName = capitalizeFirstLetter(tag.TagName);
-                existingTagNamesList.Add(tagName);
+                inputTagNamesListCapitalized.Add(capitalizeFirstLetter(tagName));
             }
 
             // Finds tags in the database with same name as those in the user written tags
-            List<Tag> existingTagsInDatabase = await context.Tags.Where(t => existingTagNamesList.Contains(t.TagName)).ToListAsync();
+            List<Tag> existingTagsInDatabase = await context.Tags.Where(t => inputTagNamesListCapitalized.Contains(t.TagName)).ToListAsync();
 
             return existingTagsInDatabase;
         }

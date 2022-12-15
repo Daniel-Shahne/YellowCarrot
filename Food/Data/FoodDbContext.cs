@@ -29,7 +29,7 @@ namespace YellowCarrot.Food.Data
         public DbSet<Step> Steps { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder ob)
+    protected override void OnConfiguring(DbContextOptionsBuilder ob)
         {
             ob.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=YellowCarrotFoodDb;Trusted_Connection=True;");
         }
@@ -44,17 +44,19 @@ namespace YellowCarrot.Food.Data
                 .WithMany(r => r.Ingredients)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            /* Defines Recipe-Tags Many-Many */
-            mb.Entity<Recipe>()
-                .HasMany(r => r.Tags)
-                .WithMany(t => t.Recipes);
-
             /* Defines Recipe-Step One-Many */
             mb.Entity<Step>()
                 .HasOne(s => s.Recipe)
                 .WithMany(r => r.Steps)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            /* Defines Recipe-Tags Many-Many */
+            mb.Entity<Recipe>()
+                .HasMany(r => r.Tags)
+                .WithMany(t => t.Recipes);
+
+            // mb.Entity<RecipeTag>().HasKey(x => new { x.RecipeId, x.TagId });
 
             // ---------- SEEDING -------------
 

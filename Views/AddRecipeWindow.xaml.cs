@@ -328,12 +328,12 @@ namespace YellowCarrot.Views
             }
             else
             {
-                // Lists for all LVI's tag objects
+                // Lists for all LVI's tag objects, or name
                 List<Step> stepsList = new();
                 List<Ingredient> ingredientsList = new();
-                List<Tag> tagsListPrimitive = new();
+                List<string> userInputTagsNames = new();
 
-                // Getting all LVI tag objects
+                // Getting all LVI tag objects, and tag names
                 foreach (ListViewItem lvi in lvSteps.Items)
                 {
                     Step step = (Step)lvi.Tag;
@@ -347,17 +347,39 @@ namespace YellowCarrot.Views
                 foreach (ListViewItem lvi in lvTags.Items)
                 {
                     Tag tag = (Tag)lvi.Tag;
-                    tagsListPrimitive.Add(tag);
+                    userInputTagsNames.Add(tag.TagName);
                 }
 
 
-
-                /* Tags have to be checked for if they already exist
-                 * The two lists then have to be combined somehow*/
+                /* Tags have to be checked for if they already exist */
                 List<Tag> existingTagsList = new();
                 using (FoodDbContext context = new())
                 {
-                    existingTagsList = await new TagsRepo(context).GetMatchingTagsByName(tagsListPrimitive);
+                    existingTagsList = await new TagsRepo(context).GetMatchingTagsByName(userInputTagsNames);
+                }
+
+
+                /* Only tags that dont exist prior to adding should
+                 * be in the created recipe, the rest are added via
+                 * updating */
+                List<Tag> newTags = new();
+                Func<string, string> capitalizeFirstLetter = x => $"{char.ToUpper(x[0])}{x.Substring(1)}";
+                // Removes any userInputTagsNames string that matches an existing tags name
+                for (int i = 0; i < existingTagsList.Count; i++)
+                {
+                    if (userInputTagsNames.Contains(existingTagsList[i].TagName))
+                    {
+                        userInputTagsNames.Remove(existingTagsList[i].TagName);
+                    }
+                }
+                // Populates newTags with newly created tags
+                foreach (string tagName in userInputTagsNames)
+                {
+                    Tag tag = new Tag()
+                    {
+                        TagName = tagName,
+                    };
+                    newTags.Add(tag);
                 }
 
 
@@ -366,7 +388,7 @@ namespace YellowCarrot.Views
                 {
                     Name = txbRecipeName.Text,
                     Steps = stepsList,
-                    //Tags = existingTagsList, //TODO Change this
+                    Tags = newTags,
                     Ingredients = ingredientsList,
                     UserId = loggedInUser.UserId
                 };
