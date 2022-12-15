@@ -397,7 +397,12 @@ namespace YellowCarrot.Views
                 /* Should try updating recipe with tags afterwards */
                 using (FoodDbContext context = new())
                 {
+                    // Creates an recipe with new tags only
                     await new RecipesRepo(context).CreateRecipeAsync(newRecipe);
+                    await context.SaveChangesAsync();
+
+                    // Updates the recipe with the new tags
+                    await new RecipesRepo(context).AddExistingTagsToRecipe(newRecipe.RecipeId, existingTagsList);
                     await context.SaveChangesAsync();
 
                     MessageBox.Show($"Added recipe {newRecipe.Name}!");

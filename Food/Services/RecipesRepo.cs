@@ -58,5 +58,14 @@ namespace YellowCarrot.Food.Services
         {
             await context.SaveChangesAsync();
         }
+
+        public async Task AddExistingTagsToRecipe(int RecipeId, List<Tag> existingTags)
+        {
+            Recipe recipe = await context.Recipes.Where(r => r.RecipeId == RecipeId).FirstAsync();
+
+            foreach (Tag tag in existingTags) recipe.Tags.Add(tag);
+
+            context.Recipes.Update(recipe);
+        }
     }
 }
