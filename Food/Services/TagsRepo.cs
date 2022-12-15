@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,10 @@ namespace YellowCarrot.Food.Services
                 existingTagNamesList.Add(tagName);
             }
 
+            // Finds tags in the database with same name as those in the user written tags
+            List<Tag> existingTagsInDatabase = await context.Tags.Where(t => existingTagNamesList.Contains(t.TagName)).ToListAsync();
 
+            return existingTagsInDatabase;
         }
     }
 }

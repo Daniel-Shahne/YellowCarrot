@@ -350,6 +350,8 @@ namespace YellowCarrot.Views
                     tagsListPrimitive.Add(tag);
                 }
 
+
+
                 /* Tags have to be checked for if they already exist
                  * The two lists then have to be combined somehow*/
                 List<Tag> existingTagsList = new();
@@ -358,19 +360,24 @@ namespace YellowCarrot.Views
                     existingTagsList = await new TagsRepo(context).GetMatchingTagsByName(tagsListPrimitive);
                 }
 
+
+
                 Recipe newRecipe = new()
                 {
                     Name = txbRecipeName.Text,
                     Steps = stepsList,
-                    Tags = tagsListPrimitive, //TODO Change this
+                    //Tags = existingTagsList, //TODO Change this
                     Ingredients = ingredientsList,
                     UserId = loggedInUser.UserId
                 };
 
+
+                /* Should try updating recipe with tags afterwards */
                 using (FoodDbContext context = new())
                 {
                     await new RecipesRepo(context).CreateRecipeAsync(newRecipe);
                     await context.SaveChangesAsync();
+
                     MessageBox.Show($"Added recipe {newRecipe.Name}!");
                 }
             }
