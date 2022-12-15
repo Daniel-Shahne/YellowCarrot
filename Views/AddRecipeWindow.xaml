@@ -136,15 +136,15 @@
                 <RowDefinition/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-           
-            
+
+
             <!-- Description input field -->
             <TextBox x:Name="txbStepDescription"
                      Grid.Row="0"
                      Margin="10"
                      TextWrapping="Wrap"
                      MaxLength="1000" TextChanged="txbStepDescription_TextChanged"/>
-            
+
             <!-- ListView of steps -->
             <ListView x:Name="lvSteps"
                       Grid.Row="1"
@@ -165,8 +165,6 @@
                 <Button x:Name="btnRemoveStep"
                         Content="Remove Step" Click="btnRemoveStep_Click"/>
             </StackPanel>
-
         </Grid>
-        
     </Grid>
 </Window>

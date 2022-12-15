@@ -53,13 +53,31 @@ namespace YellowCarrot.Views
 
         private void btnRecipeDetails_Click(object sender, RoutedEventArgs e)
         {
-            // TODO
+            if (lvRecipes.SelectedItem is null)
+            {
+                MessageBox.Show("Need to select a recipe first");
+                return;
+            }
+
+            ListViewItem lvi = (ListViewItem)lvRecipes.SelectedItem;
+            Recipe selectedRecipe = (Recipe)lvi.Tag;
+            
+            RecipeDetailsWindow rdw = new(selectedRecipe, loggedInUser);
+            rdw.Show();
+            this.Close();
         }
 
         private void btnAddRecipe_Click(object sender, RoutedEventArgs e)
         {
             AddRecipeWindow adw = new(loggedInUser);
             adw.Show();
+            this.Close();
+        }
+
+        private void btnSignOut_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = new();
+            mainwin.Show();
             this.Close();
         }
     }

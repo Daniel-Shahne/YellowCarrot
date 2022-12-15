@@ -43,13 +43,13 @@
                     Height="50"
                     Width="200"
                     Content="Add Recipe" Click="btnAddRecipe_Click"/>
-            <Button x:Name="btnRemoveRecipe"
-                    Grid.Row="2"
+            <Button x:Name="btnSignOut"
+                    Grid.Row="3"
                     Height="50"
                     Width="200"
-                    Content="Remove Recipe"/>
+                    Content="Sign Out" Click="btnSignOut_Click"/>
             <Button x:Name="btnRecipeDetails"
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Height="50"
                     Width="200"
                     Content="Recipe details" Click="btnRecipeDetails_Click"/>

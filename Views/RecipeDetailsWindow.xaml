@@ -7,6 +7,173 @@
         mc:Ignorable="d"
         Title="RecipeDetailsWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid Margin="20">
+            <!-- First layer split into 3 columns for objectives -->
+            <!-- 0. Name, tag and add/cancel recipe buttons -->
+            <!-- 1. Ingredients -->
+            <!-- 2. Steps -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Second layer grid for objective 0 -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Stackpanel for recipe name label/txb -->
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Recipe name:"/>
+                    <TextBox x:Name="txbRecipeName"
+                         Height="50"
+                         Width="150"
+                         Margin="5 0 0 0"
+                             IsEnabled="False"/>
+                </StackPanel>
+
+                <!-- Third layer grid for tags-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Stackpanel for tag label,txb and btn -->
+                    <StackPanel Height="50">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="btnRemoveRecipe"
+                                    Content="Remove recipe"
+                                    Height="50"
+                                    IsEnabled="False"/>
+                            <Button x:Name="btnUnlock"
+                                    Content="Unlock recipe"
+                                    Height="50" Click="btnUnlock_Click"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
+                            <Button x:Name="btnAddTag"
+                            Width="60"
+                            Height="50"
+                            Content="Add tag" Visibility="Hidden"
+                            Margin="10 0"/>
+                            <Button x:Name="btnRemoveTag"
+                            Width="60"
+                            Height="50"
+                            Content="Remove tag" Visibility="Hidden"
+                            Margin="10 0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ListView x:Name="lvTags"
+                          Grid.Row="1"
+                          Margin="10"/>
+                </Grid>
+
+                <!-- TODO Empty row incase i need to add something extra -->
+
+                <!-- Button for adding recipe or cancelling -->
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+                    <Button x:Name="btnUpdateRecipe"
+                        Width="100"
+                        Height="50"
+                        Content="Update Recipe"
+                        Margin="10 0"
+                            IsEnabled="False" Click="btnUpdateRecipe_Click"/>
+                    <Button x:Name="btnCancel"
+                        Width="100"
+                        Height="50"
+                        Content="Cancel"
+                        Margin="10 0"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Second layer grid for objective 1 -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Input fields for ingredients -->
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Ingredient name:"/>
+                    <TextBox x:Name="txbIngredientName"
+                         Width="150"
+                             IsEnabled="False"
+                         Height="50" TextChanged="txbIngredientName_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Label Content="Quantity and unit:"/>
+                    <TextBox x:Name="txbQuantity"
+                         Width="145"
+                             IsEnabled="False"
+                         Height="50" TextChanged="txbQuantity_TextChanged"/>
+                </StackPanel>
+
+                <!-- Listview of ingredients -->
+                <ListView x:Name="lvIngredients"
+                      Grid.Row="2"
+                      Margin="10"/>
+
+                <!-- Add/Remove ingredient buttons -->
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+                    <Button x:Name="btnAddIngredient"
+                        Content="Add Ingredient"
+                        Height="50"
+                        Margin="10 0"
+                            IsEnabled="False" Click="btnAddIngredient_Click"/>
+                    <Button x:Name="btnRemoveIngredient"
+                        Content="Remove Ingredient"
+                        Height="50"
+                        Margin="10 0"
+                            IsEnabled="False" Click="btnRemoveIngredient_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Second layer grid for objective 2 -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+
+                <!-- Description input field -->
+                <TextBox x:Name="txbStepDescription"
+                     Grid.Row="0"
+                     Margin="10"
+                     TextWrapping="Wrap"
+                     MaxLength="1000" Visibility="Hidden"/>
+
+                <!-- ListView of steps -->
+                <ListView x:Name="lvSteps"
+                      Grid.Row="1"
+                      Margin="10">
+                </ListView>
+
+                <!-- Order input label/field + step buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Visibility="Hidden">
+                    <Label Content="Order"
+                       Height="50" Visibility="Hidden"/>
+                    <TextBox x:Name="txbOrderNr"
+                         Width="50"
+                         Height="50"
+                         Margin="5 0" Visibility="Hidden"/>
+                    <Button x:Name="btnAddStep"
+                        Content="Add Step"
+                        Margin="5 0" Visibility="Hidden"/>
+                    <Button x:Name="btnRemoveStep"
+                        Content="Remove Step" Visibility="Hidden"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
