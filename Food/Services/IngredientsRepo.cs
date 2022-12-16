@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,15 @@ namespace YellowCarrot.Food.Services
             this.context = context;
         }
 
+
+        /* Removes an ingredient by its Id */
+        public async Task removeIngredientById(int ingredientId)
+        {
+            Ingredient ingr = await context.Ingredients.FirstAsync(x => x.IngredientId == ingredientId);
+            context.Ingredients.Remove(ingr);
+        }
+
+        /*  */
         public void removeIngredients(List<Ingredient> ingredientsToRemove)
         {
             context.Ingredients.RemoveRange(ingredientsToRemove);

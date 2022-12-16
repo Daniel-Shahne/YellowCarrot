@@ -160,7 +160,7 @@ namespace YellowCarrot.Views
 
 
                 // Changes are only visually represented by LV, actual changes are made here
-                // recipe.Ingredients.Add(newIngredient);
+                // recipe.Ingredients.Add(newIngredient); //Removed this since it required updating the entity
 
                 using (FoodDbContext context = new())
                 {
@@ -188,10 +188,9 @@ namespace YellowCarrot.Views
             MessageBox.Show("Updated recipe!");
         }
 
-        /* Removes an ingredient from the listview and marks that
-         * ingredient for removal once update button is pressed. Does
-         * so by adding said ingredient to a list of ingredients to remove*/
-        private void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
+        /* Removes an ingredient from the listview and from the
+         * recipe */
+        private async void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (lvIngredients.SelectedItem is null)
             {
@@ -202,7 +201,14 @@ namespace YellowCarrot.Views
             ListViewItem lvi = (ListViewItem)lvIngredients.SelectedItem;
             Ingredient ingredientToRemove = (Ingredient)lvi.Tag;
 
-            ingredientsToRemoveList.Add(ingredientToRemove);
+            // ingredientsToRemoveList.Add(ingredientToRemove);
+            
+            using (FoodDbContext context = new())
+            {
+                await new IngredientsRepo(context).removeIngredientById(ingredientToRemove.IngredientId);
+                await context.SaveChangesAsync();
+            }
+            
             lvIngredients.Items.Remove(lvi);
         }
 
