@@ -112,6 +112,9 @@ namespace YellowCarrot.Views
             }
         }
 
+        /* Unlocks the recipe for editing. Is only avaliable
+         * if users id matches recipes recipeid. Avaliability
+         * is set by ctor. */
         private void btnUnlock_Click(object sender, RoutedEventArgs e)
         {
             btnUpdateRecipe.IsEnabled = true;
@@ -171,6 +174,7 @@ namespace YellowCarrot.Views
             }
         }
 
+        /* Only updates the name, despite the method name. */
         private async void btnUpdateRecipe_Click(object sender, RoutedEventArgs e)
         {
             using (FoodDbContext context = new())

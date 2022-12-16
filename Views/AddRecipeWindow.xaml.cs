@@ -355,27 +355,40 @@ namespace YellowCarrot.Views
                 }
 
 
+
+
                 /* Tags have to be checked for if they already exist */
-                List<Tag> existingTagsList = new();
+                List<Tag> existingTagsList = new(); // This is where the bug happens. Existing tagsList gets one with capitalized letter and one without!
                 using (FoodDbContext context = new())
                 {
                     existingTagsList = await new TagsRepo(context).GetMatchingTagsByName(userInputTagsNames);
                 }
 
 
-                /* Only tags that dont exist prior to adding should
-                 * be in the created recipe, the rest are added via
-                 * updating */
-                List<Tag> newTags = new();
+
+
+                // Gives user input tags the correct form
                 Func<string, string> capitalizeFirstLetter = x => $"{char.ToUpper(x[0])}{x.Substring(1)}";
+                
+                for (int i = 0; i < userInputTagsNames.Count; i++)
+                {
+                    userInputTagsNames[i] = capitalizeFirstLetter(userInputTagsNames[i]);
+                }
+
+
+
                 // Removes any userInputTagsNames string that matches an existing tags name
-                for (int i = 0; i < existingTagsList.Count; i++)
+                for (int i = 0; i < existingTagsList.Count; i++) // Check userinputtagsnames here
                 {
                     if (userInputTagsNames.Contains(existingTagsList[i].TagName))
                     {
                         userInputTagsNames.Remove(existingTagsList[i].TagName);
                     }
                 }
+
+
+
+                List<Tag> newTags = new();
                 // Populates newTags with newly created tags
                 foreach (string tagName in userInputTagsNames)
                 {
@@ -387,7 +400,7 @@ namespace YellowCarrot.Views
                 }
 
 
-
+                /* Should create a recipe containing only new tags */
                 Recipe newRecipe = new()
                 {
                     Name = txbRecipeName.Text,
