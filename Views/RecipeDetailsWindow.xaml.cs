@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using YellowCarrot.Food.Data;
 using YellowCarrot.Food.Models;
+using YellowCarrot.Food.Services;
 using YellowCarrot.Users.Models;
 
 namespace YellowCarrot.Views
@@ -29,12 +30,15 @@ namespace YellowCarrot.Views
         private Regex quantityRegex = new Regex(@"^(\d{1,5})\s(\w{1,15})$");
         private bool ingredientNameLenOk;
         private bool quantityTxbOk;
+        private List<Ingredient> ingredientsToRemoveList = new();
+        private string previousRecipeName;
 
         internal RecipeDetailsWindow(Recipe recipe, User loggedInUser)
         {
             InitializeComponent();
             this.recipe = recipe;
             this.loggedInUser = loggedInUser;
+            previousRecipeName = recipe.Name;
             OnWindowCreated();
         }
 
@@ -69,7 +73,11 @@ namespace YellowCarrot.Views
             }
 
             // If recipes and logged in users id's match then enable remove button
-            if (recipe.UserId == loggedInUser.UserId) btnRemoveRecipe.IsEnabled = true;
+            if (recipe.UserId == loggedInUser.UserId)
+            {
+                btnRemoveRecipe.IsEnabled = true;
+                btnUnlock.IsEnabled = true;
+            }
         }
 
 
@@ -112,6 +120,8 @@ namespace YellowCarrot.Views
             txbIngredientName.IsEnabled = true;
             txbQuantity.IsEnabled = true;
             txbRecipeName.IsEnabled = true;
+
+            txbRecipeName.Text = previousRecipeName;
 
             btnUnlock.IsEnabled = false;
         }
@@ -158,6 +168,12 @@ namespace YellowCarrot.Views
         {
             using (FoodDbContext context = new())
             {
+                if (txbRecipeName.Text != previousRecipeName)
+                {
+                    recipe.Name = txbRecipeName.Text;
+                }
+                new IngredientsRepo(context).removeIngredients(ingredientsToRemoveList);
+                ingredientsToRemoveList.Clear();
                 context.Recipes.Update(recipe);
                 await context.SaveChangesAsync();
             }
@@ -172,12 +188,34 @@ namespace YellowCarrot.Views
                 MessageBox.Show("Select an ingredient first");
                 return;
             }
-            
+
             ListViewItem lvi = (ListViewItem)lvIngredients.SelectedItem;
             Ingredient ingredientToRemove = (Ingredient)lvi.Tag;
 
-            recipe.Ingredients.Remove(ingredientToRemove);
+            ingredientsToRemoveList.Add(ingredientToRemove);
             lvIngredients.Items.Remove(lvi);
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeWindow recwin = new(loggedInUser);
+            recwin.Show();
+            this.Close();
+        }
+
+        private async void btnRemoveRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            using (FoodDbContext context = new())
+            {
+                new RecipesRepo(context).RemoveRecipe(recipe);
+                await context.SaveChangesAsync();
+                
+                MessageBox.Show("Removed this recipe");
+                
+                RecipeWindow recwin = new(loggedInUser);
+                recwin.Show();
+                this.Close();
+            }
         }
     }
 }

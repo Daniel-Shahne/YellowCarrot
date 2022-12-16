@@ -50,9 +50,10 @@
                             <Button x:Name="btnRemoveRecipe"
                                     Content="Remove recipe"
                                     Height="50"
-                                    IsEnabled="False"/>
+                                    IsEnabled="False" Click="btnRemoveRecipe_Click"/>
                             <Button x:Name="btnUnlock"
                                     Content="Unlock recipe"
+                                    IsEnabled="False"
                                     Height="50" Click="btnUnlock_Click"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden">
@@ -88,7 +89,7 @@
                         Width="100"
                         Height="50"
                         Content="Cancel"
-                        Margin="10 0"/>
+                        Margin="10 0" Click="btnCancel_Click"/>
                 </StackPanel>
             </Grid>
 
