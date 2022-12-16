@@ -311,7 +311,11 @@ namespace YellowCarrot.Views
             else MessageBox.Show("Select an ingredient to remove first");
         }
 
-
+        /* Checks for errors first.
+         * Adds the new recipe with the tags done in two steps.
+         * First step being adding non-existing database tags as new ones
+         * with the new recipe object. Then afterwards update the recipes
+         * relations to the existing ones. */
         private async void btnAddRecipe_Click(object sender, RoutedEventArgs e)
         {
             List<string> errors = new();
@@ -394,7 +398,6 @@ namespace YellowCarrot.Views
                 };
 
 
-                /* Should try updating recipe with tags afterwards */
                 using (FoodDbContext context = new())
                 {
                     // Creates an recipe with new tags only
@@ -406,6 +409,9 @@ namespace YellowCarrot.Views
                     await context.SaveChangesAsync();
 
                     MessageBox.Show($"Added recipe {newRecipe.Name}!");
+                    RecipeWindow recwin = new(loggedInUser);
+                    recwin.Show();
+                    this.Close();
                 }
             }
         }   

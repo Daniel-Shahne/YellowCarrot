@@ -35,7 +35,7 @@
                 <Button x:Name="btnSearch"
                         Width="50"
                         Margin="0 20"
-                        Content="Search"/>
+                        Content="Search" Click="btnSearch_Click"/>
             </StackPanel>
 
             <!-- Buttons on right side -->

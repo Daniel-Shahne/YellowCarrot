@@ -172,15 +172,18 @@ namespace YellowCarrot.Views
                 {
                     recipe.Name = txbRecipeName.Text;
                 }
-                new IngredientsRepo(context).removeIngredients(ingredientsToRemoveList);
+                new IngredientsRepo(context).removeIngredients(ingredientsToRemoveList); // No need to update the recipe after removing an ingredient
                 ingredientsToRemoveList.Clear();
-                context.Recipes.Update(recipe);
+                context.Recipes.Update(recipe); // This has some weird interaction with Tags, attempting to insert the tags again?
                 await context.SaveChangesAsync();
             }
 
             MessageBox.Show("Updated recipe!");
         }
 
+        /* Removes an ingredient from the listview and marks that
+         * ingredient for removal once update button is pressed. Does
+         * so by adding said ingredient to a list of ingredients to remove*/
         private void btnRemoveIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (lvIngredients.SelectedItem is null)
@@ -196,6 +199,7 @@ namespace YellowCarrot.Views
             lvIngredients.Items.Remove(lvi);
         }
 
+        // Returns to recipe window, passing the logged in user
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             RecipeWindow recwin = new(loggedInUser);
