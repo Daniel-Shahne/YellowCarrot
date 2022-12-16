@@ -28,6 +28,15 @@ namespace YellowCarrot.Food.Services
                 .ToListAsync();
         }
 
+        public async Task<Recipe> GetRecipeByIdAsync(int recipeId)
+        {
+            return await context.Recipes
+                .Include(r => r.Ingredients)
+                .Include(r => r.Tags)
+                .Include(r => r.Steps)
+                .FirstAsync(r => r.RecipeId == recipeId);
+        }
+
         /* Searches by recipe name and/or tag.
          * Also gets ALL their related data */
         public async Task<List<Recipe>> SearchRecipesAsync(string searchWord)

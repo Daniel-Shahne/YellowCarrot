@@ -130,7 +130,7 @@ namespace YellowCarrot.Views
          * objects in LV is added/removed, instead of all changes at once at
          * the end depending on what objects are in LV. Otherwise identical to
          * the method in that window. */
-        private void btnAddIngredient_Click(object sender, RoutedEventArgs e)
+        private async void btnAddIngredient_Click(object sender, RoutedEventArgs e)
         {
             List<string> errors = new();
             if (!ingredientNameLenOk) errors.Add("Ingredient name needs to be between 3 and 20 characters long");
@@ -160,7 +160,14 @@ namespace YellowCarrot.Views
 
 
                 // Changes are only visually represented by LV, actual changes are made here
-                recipe.Ingredients.Add(newIngredient);
+                // recipe.Ingredients.Add(newIngredient);
+
+                using (FoodDbContext context = new())
+                {
+                    Recipe actualRecipe = await new RecipesRepo(context).GetRecipeByIdAsync(this.recipe.RecipeId);
+                    actualRecipe.Ingredients.Add(newIngredient);
+                    await context.SaveChangesAsync();
+                }
             }
         }
 
