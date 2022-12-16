@@ -14,11 +14,12 @@
         </Grid.ColumnDefinitions>
 
         <!-- Listview on left side -->
-        <ListView x:Name="lvRecipes"/>
+        <ListView x:Name="lvRecipes" SelectionChanged="lvRecipes_SelectionChanged"/>
 
         <!-- Second layer subgrid for right side -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -44,7 +45,7 @@
                     Width="200"
                     Content="Add Recipe" Click="btnAddRecipe_Click"/>
             <Button x:Name="btnSignOut"
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Height="50"
                     Width="200"
                     Content="Sign Out" Click="btnSignOut_Click"/>
@@ -52,7 +53,15 @@
                     Grid.Row="2"
                     Height="50"
                     Width="200"
-                    Content="Recipe details" Click="btnRecipeDetails_Click"/>
+                    Content="Recipe details" 
+                    Click="btnRecipeDetails_Click"
+                    IsEnabled="False"/>
+            <Button x:Name="btnRemoveRecipe"
+                    Grid.Row="3"
+                    Height="50"
+                    Width="200"
+                    Content="Remove recipe"
+                    IsEnabled="False" Click="btnRemoveRecipe_Click"/>
         </Grid>
     </Grid>
 </Window>

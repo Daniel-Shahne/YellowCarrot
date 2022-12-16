@@ -50,6 +50,7 @@
                             <Button x:Name="btnRemoveRecipe"
                                     Content="Remove recipe"
                                     Height="50"
+                                    Visibility="Hidden"
                                     IsEnabled="False" Click="btnRemoveRecipe_Click"/>
                             <Button x:Name="btnUnlock"
                                     Content="Unlock recipe"

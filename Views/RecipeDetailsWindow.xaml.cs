@@ -75,7 +75,7 @@ namespace YellowCarrot.Views
             // If recipes and logged in users id's match then enable remove button
             if (recipe.UserId == loggedInUser.UserId)
             {
-                btnRemoveRecipe.IsEnabled = true;
+                // btnRemoveRecipe.IsEnabled = true;
                 btnUnlock.IsEnabled = true;
             }
         }
@@ -203,6 +203,8 @@ namespace YellowCarrot.Views
             this.Close();
         }
 
+        /* This method is removed in practice as it cannot be reached. I had to
+         * move it to RecipeWindow since i misread the instructions. */
         private async void btnRemoveRecipe_Click(object sender, RoutedEventArgs e)
         {
             using (FoodDbContext context = new())

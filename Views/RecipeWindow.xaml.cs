@@ -80,5 +80,37 @@ namespace YellowCarrot.Views
             mainwin.Show();
             this.Close();
         }
+
+        private void lvRecipes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvRecipes.SelectedItem is not null) 
+            {
+                btnRecipeDetails.IsEnabled = true;
+                ListViewItem lvi = (ListViewItem)lvRecipes.SelectedItem;
+                Recipe recipe = (Recipe)lvi.Tag;
+
+                if (loggedInUser.UserId == recipe.UserId) btnRemoveRecipe.IsEnabled = true;
+                else btnRemoveRecipe.IsEnabled = false;
+            }
+            else btnRecipeDetails.IsEnabled = false;
+
+        }
+
+        private async void btnRemoveRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this recipe?", "Deletion warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (result == MessageBoxResult.No) return;
+
+            using (FoodDbContext context = new())
+            {
+                ListViewItem lvi = (ListViewItem)lvRecipes.SelectedItem;
+                Recipe recipe = (Recipe)lvi.Tag;
+
+                new RecipesRepo(context).RemoveRecipe(recipe);
+                await context.SaveChangesAsync();
+            }
+
+            lvRecipes.Items.Remove(lvRecipes.SelectedItem);
+        }
     }
 }
