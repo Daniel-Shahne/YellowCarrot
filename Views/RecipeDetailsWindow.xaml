@@ -83,7 +83,7 @@
                     <Button x:Name="btnUpdateRecipe"
                         Width="100"
                         Height="50"
-                        Content="Update Recipe"
+                        Content="Update Name"
                         Margin="10 0"
                             IsEnabled="False" Click="btnUpdateRecipe_Click"/>
                     <Button x:Name="btnCancel"

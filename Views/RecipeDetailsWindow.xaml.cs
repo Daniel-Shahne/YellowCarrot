@@ -177,15 +177,16 @@ namespace YellowCarrot.Views
             {
                 if (txbRecipeName.Text != previousRecipeName)
                 {
-                    recipe.Name = txbRecipeName.Text;
+                    Recipe actualRecipe = await new RecipesRepo(context).GetRecipeByIdAsync(this.recipe.RecipeId);
+                    actualRecipe.Name = txbRecipeName.Text;
+                    await context.SaveChangesAsync();
+                    MessageBox.Show("Updated recipe name!");
                 }
-                new IngredientsRepo(context).removeIngredients(ingredientsToRemoveList); // No need to update the recipe after removing an ingredient
-                ingredientsToRemoveList.Clear();
-                context.Recipes.Update(recipe); // This has some weird interaction with Tags, attempting to insert the tags again?
-                await context.SaveChangesAsync();
+                //new IngredientsRepo(context).removeIngredients(ingredientsToRemoveList); // No need to update the recipe after removing an ingredient
+                //ingredientsToRemoveList.Clear();
+                //context.Recipes.Update(recipe); // This has some weird interaction with Tags, attempting to insert the tags again?
+                // await context.SaveChangesAsync();
             }
-
-            MessageBox.Show("Updated recipe!");
         }
 
         /* Removes an ingredient from the listview and from the
